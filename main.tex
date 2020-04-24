@@ -99,15 +99,13 @@ Notice that the number $k$ of regulators is the same for all genes.
 A \emph{random Boolean network} is a Boolean network $(y,f)$, where   $y(i)$ and $f_i$ are chosen randomly and  independently of each other. %uniformly with probability $\binom{n}{k}^{-1}$, and each $f_i$  is chosen uniformly with probability $2^{-2^k}$, independently of each other. 
 
 A \emph{directed graph} (or \emph{digraph}) $G$ consists of a finite set of elements $V(G)$ called vertices (or nodes), and a set of pairs of elements $E(G)\subseteq V(G)\times V(G)$ called directed edges (or arcs).  
-For any arc $(x,x')\in E(G)$, we say that $x'$ is a \emph{successor} of $x$. %, or that 
-%$x$ is a \emph{predecessor} of $x'$.
-%We say that $G$ is \emph{strongly connected} if there is a path in $G$ between any two distinct nodes in each direction, i.e. for all $x_s,x_t\in V(G)$ there is a path from $x_s$ to $x_t$ and a path from $x_t$ to $x_s$.  
+For any arc $(u,v)\in E(G)$, we say that $v$ is a \emph{successor} of $u$. 
 %The \emph{out-neighbourhood} of a node $i\in V(G)$ is the set $N^+(i)=\{j\in V(G):(j,i)\in E(G)\}$. 
-The \emph{out-degree} of a node $x$ is the number %$d^+(x) =|\{y\in V(G):(x,y)\in E(G)\}|$ 
- of successors of $x$. 
+The \emph{out-degree} of a node $v$ is the number %$d^+(x) =|\{y\in V(G):(x,y)\in E(G)\}|$ 
+ of successors of $v$. 
 %Similarly, the \emph{in-neighbourhood} of $i$ is $N^-(i)=\{j\in V(G):(i,j)\in E(G)\}$ and its \emph{in-degree} is $d^-(i) = |N^-(i)|$.
 A \emph{directed pseudoforests} is a disjoint union of digraphs where each node has out-degree one. 
-Given a set $X$, every function $F\colon X\to X$  defines a directed pseudoforest with elements of $X$
+Every function $F\colon X\to X$,  from a set $X$ to itself, defines a directed pseudoforest with elements of $X$
 as vertices, and for all $x,x'\in X$, a directed edge from $x$ to $x'$ if $F(x)=x'$.
 
 
@@ -121,10 +119,11 @@ F(x):=\big(
  f_n( x_{y(n)})
 \big),\quad x\in \{0,1\}^n.\qedhere
 \]
-We can identify a Boolean network $(y,f)$ with the mapping $F$, and so with the directed pseudoforest on $\{0,1\}^n$.
+Thus, we identify a Boolean network $(y,f)$ with the mapping $F$, and so with the directed pseudoforest on $\{0,1\}^n$.
   
-\section{}
+  
 Fuzzy networks are directed pseudoforests on the state-space of a gene regulatory network, where the expression of each gene is represented by one of $q\geq 2$ different values. 
+That is fuzzy networks are directed pseudoforests on $\{0,1,\dots,q-1\}^n$.
 A fuzzy network where $q=2$ is precisely a Boolean network.
  Fuzzy networks have been recently used to study some aspects related to the differentiation of cells from the immune system [], and also to explain the importance of certain gene products associated with the development of metabolic syndrome and type 2 diabetes [].  
 
@@ -143,10 +142,46 @@ f_i(x_{i_1},\dots,x_{i_k})=& \big(x_{i_1}\wedge f_i(x_{i_1},\dots,x_{i_k})\big) 
 Notice that in this model, the base  is the same for all genes.
 Every fuzzy network with base $q$ is a directed pseudoforest on $\{0,1,\dots,q-1\}^n$. 
 
-A random fuzzy network is a fuzzy network $(y,f)$, where   $y(i)\subseteq I$ and $f_i\colon\{0,1,\dots,q-1\}^n\rightarrow\{0,1,\dots,q-1\}$ are chosen randomly and  independently of each other, for all $i\in I$.
+A \emph{random fuzzy network} is a fuzzy network $(y,f)$, where   $y(i)\subseteq I$ and $f_i\colon\{0,1,\dots,q-1\}^n\rightarrow\{0,1,\dots,q-1\}$ are chosen randomly and  independently of each other, for all $i\in I$.
 Random fuzzy networks are a particular class of the random networks with multiple states of Sol\'e et. al. []. 
 
- 
+
+ A \emph{walk} in a digraph $G$ is a sequence of vertices  $v_1,v_2,\dots\in V(G)$, so that for all $j\geq 1, (v_j,v_{j+1})\in E(G)$.
+A walk where all nodes are distinct is called a \emph{path}.
+Paths are necessarily finite walks.   
+A finite walk where the first and the last node are the same is called a \emph{cycle}. 
+The number of distinct nodes in a cycle is the called the \emph{length} of the cycle.
+
+%We say that a digraph $G$ is \emph{strongly connected} if there is a path in $G$ between any two distinct nodes in each direction, i.e. for all $u,v\in V(G)$ there is a path from $u$ to $v$ and a path from $u$ to $v$. 
+
+
+The average number and length of state cycles for  random Boolean networks are two well-studied combinatorial parameters. 
+ Let $C(n,q)$ be the average number of cycles  
+ on a random fuzzy network with $n$ genes and base $q$, where the number $k$ of regulators per gene is fixed to some constant value. By a result of Kruskal [], we know that 
+\[
+C(n,q)\to\frac{1}{2}\log q^n + \bigg( \frac{\log 2 + C}{2} \bigg) + o(1),\quad n\to\infty,
+\]
+ where $C=0.5772\dots$ is Euler's constant.
+  
+ Samuelsson et al. [] gave a formula for $C(n, 2)$ which allows them to conclude that $C(n,2)$ grows faster than $n^{a}$, for any $a>0$.
+  Our experimental research suggests that for  $b,q\geq 0$, if $b\leq q$ then
+ \begin{equation}
+ \label{eq:2}
+ C(n,b)\leq C(n,q).
+ \end{equation}
+  In particular, $C(n,2)\leq C(n,q)$ for any $q\geq 2$.
+So, equation \eqref{eq:2} would imply 
+ \[
+ \frac{n^{a}}{
+    C(n,q)} \to 0,\qquad\qquad n\to\infty.
+  \]
+In words, the average number of cycles in a random fuzzy network  $C(n,q)$ grows faster than $n^{a}$, for any $a>0$. 
+% Given $b,q\geq 0$, we have
+% \[b^n\leq q^n,\qquad n\geq 1
+% \] if $b\leq q$. 
+
+
+% 
 \newpage
  
 \section{}
