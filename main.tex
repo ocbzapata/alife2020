@@ -51,10 +51,11 @@
 % output. The use of ps type I fonts should avoid this problem.
 
 
-\title{Dynamics of Random Fuzzy Networks}
-\author{Carlos Gershenson$^{1,2}$, Hyobin Kim$^1$, Octavio Zapata$^1$
+\title{On the number of cycles and other combinatorial properties of random network models of gene regulation}
+\author{
+Carlos Gershenson$^{1,2}$, Hyobin Kim$^1$, Octavio Zapata$^1$
 \mbox{}\\
-$^1$Centro de Ciencias de la Complejidad , Universidad Nacional Aut\'onoma de M\'exico, M\'exico \\
+$^{1}$Centro de Ciencias de la Complejidad , Universidad Nacional Aut\'onoma de M\'exico, M\'exico \\
 $^2$Instituto de Investigaciones en Matem\'aticas Aplicadas y en Sistemas, Universidad Nacional Aut\'onoma de M\'exico, M\'exico \\
 cgg@unam.mx\ \ \ 
 hyobin.kim@c3.unam.mx\ \ \ 
@@ -79,7 +80,7 @@ octavio.zapata@c3.unam.mx} % email of corresponding author(s)
 % Abstract length should not exceed 250 words
 %\end{abstract}
 Genes are the fundamental unit of inheritable information. 
-A gene is a part of the genomic sequence that encodes how to produce (synthesise) either a protein or some RNA (a gene product). 
+A gene is a part of the genomic sequence that encodes how to produce (synthesise) either a protein or some RNA (gene products). 
 Gene product synthesis is called gene expression. 
 Not all genes are expressed at the same time.
 The expression of each gene is affected by the expression of other genes in a process called gene regulation. 
@@ -87,98 +88,121 @@ This gives rise to a network-like structure called genetic regulatory network. %
 
 Random Boolean networks were proposed by Kauffman in [] as models of genetic regulatory networks.
  The expression of each gene is represented using one bit: 1 represents the gene is expressed, and 0  the gene is not expressed.
-Let $\{0,1\}^n$ be the set of all binary words of length $n$. A point $x=(x_1,\dots, x_n)\in \{0,1\}^n$ is called  a \emph{state} and $\{0,1\}^n$ is called the \emph{state-space}. Each index $i\in I:=\{1,\dots,n\}$ is identified with a gene.
+Let $\{0,1\}^n$ be the set of all binary words of length $n$. Each index $i\in I:=\{1,\dots,n\}$ represents a gene. A point $x=(x_1,\dots, x_n)\in \{0,1\}^n$ is called  a \emph{state}, where $x_i$ represents the expression of  gene $i$.
+%and $\{0,1\}^n$ is called the \emph{state-space}. % and $x_i\in\{0,1\}$ denotes its state.
 
 A \emph{Boolean network} with parameters $n$ and $k$, $1\leq k\leq n,$ 
 consists of a family 
-$y=\{y(i):i\in I\}$
+$\mathbf{y}=\{y(i):i\in I\}$
 of
-subsets $y(i)=\{i_1,\dots,i_k\}\subseteq I$, and a family $f=\{f_i: i\in I\}$ of functions $f_i\colon \{0,1\}^{k}\rightarrow \{0,1\}$. 
+subsets of genes $y(i)=\{i_1,\dots,i_k\}\subseteq I$, and a family $\mathbf{f}=\{f_i: i\in I\}$ of functions $f_i\colon \{0,1\}^{k}\rightarrow \{0,1\}$. 
 The $k$ genes in $y(i)$ are called the \emph{regulators} of $i$.
 Notice that the number $k$ of regulators is the same for all genes.
-A \emph{random Boolean network} is a Boolean network $(y,f)$, where   $y(i)$ and $f_i$ are chosen randomly and  independently of each other. %uniformly with probability $\binom{n}{k}^{-1}$, and each $f_i$  is chosen uniformly with probability $2^{-2^k}$, independently of each other. 
-
-A \emph{directed graph} (or \emph{digraph}) $G$ consists of a finite set of elements $V(G)$ called vertices (or nodes), and a set of pairs of elements $E(G)\subseteq V(G)\times V(G)$ called directed edges (or arcs).  
-For any arc $(u,v)\in E(G)$, we say that $v$ is a \emph{successor} of $u$. 
+A \emph{random Boolean network} is a Boolean network $(\mathbf{y},\mathbf{f})$, where   $y(i)$ and $f_i$ are chosen randomly and  independently of each other. %uniformly with probability $\binom{n}{k}^{-1}$, and each $f_i$  is chosen uniformly with probability $2^{-2^k}$, independently of each other. 
+ 
+ A \emph{directed graph} $G$ consists of a finite set of elements $V(G)$ called vertices, and a set of pairs of elements $E(G)\subseteq V(G)\times V(G)$ called directed edges.  
+For any directed edge $(u,v)\in E(G)$, we say that $u$ is a \emph{predecessor} of $v$, and $v$ is a \emph{successor} of $u$. 
 %The \emph{out-neighbourhood} of a node $i\in V(G)$ is the set $N^+(i)=\{j\in V(G):(j,i)\in E(G)\}$. 
-The \emph{out-degree} of a node $v$ is the number %$d^+(x) =|\{y\in V(G):(x,y)\in E(G)\}|$ 
- of successors of $v$. 
+%The \emph{out-degree} of a vertex $v$ is the number %$d^+(x) =|\{y\in V(G):(x,y)\in E(G)\}|$ 
+ %of successors of $v$. 
 %Similarly, the \emph{in-neighbourhood} of $i$ is $N^-(i)=\{j\in V(G):(i,j)\in E(G)\}$ and its \emph{in-degree} is $d^-(i) = |N^-(i)|$.
-A \emph{directed pseudoforests} is a disjoint union of digraphs where each node has out-degree one. 
-Every function $F\colon X\to X$,  from a set $X$ to itself, defines a directed pseudoforest with elements of $X$
-as vertices, and for all $x,x'\in X$, a directed edge from $x$ to $x'$ if $F(x)=x'$.
+A \emph{directed pseudoforests} is a disjoint union of directed graphs where each vertex has a unique successor.  
+Every function $F\colon X\to X$,  from a set $X$ to itself, defines a directed pseudoforest with the elements of $X$
+as vertices, and $\{(x, F(x)):x\in X\}$ as directed edges.
 
-
-Similarly, every Boolean network $(y,f)$ defines a directed pseudoforests
-on the state-space $\{0,1\}^n$.
-For each state $x=(x_1,\dots, x_n)\in \{0,1\}^n$ and each gene $i\in I$, let $x_{y(i)}:=(x_{i_1},\dots,x_{i_k})$. 
-Given  a fuzzy network $(y,f)$,  we define  $F\colon \{0,1\}^n\ \to\ \{0,1\}^n$ by  
+Similarly, every Boolean network $(\mathbf{y},\mathbf{f})$ defines a directed pseudoforests
+on the state-space $\{0,1\}^n$. More presicely, we define 
+ $F\colon \{0,1\}^n\ \to\ \{0,1\}^n$ 
 \[
 F(x):=\big(
  f_1( x_{y(1)}), \dots,
  f_n( x_{y(n)})
-\big),\quad x\in \{0,1\}^n.\qedhere
+\big),\quad x\in \{0,1\}^n,\qedhere
 \]
-Thus, we identify a Boolean network $(y,f)$ with the mapping $F$, and so with the directed pseudoforest on $\{0,1\}^n$.
+where $x_{y(i)}:=(x_{i_1},\dots,x_{i_k})$ is the restriction of state $x$ to the genes in $y(i)=\{i_1,\dots,i_k\}$. Thus, we identify a Boolean network $(\mathbf{y},\mathbf{f})$ with the mapping $F$ and a directed pseudoforest on $\{0,1\}^n$.
+
   
-  
-Fuzzy networks are directed pseudoforests on the state-space of a gene regulatory network, where the expression of each gene is represented by one of $q\geq 2$ different values. 
-That is fuzzy networks are directed pseudoforests on $\{0,1,\dots,q-1\}^n$.
-A fuzzy network where $q=2$ is precisely a Boolean network.
+Now we turn to more general gene regulation models, where the expression of each gene is represented by  an element in $\{0,1,\dots,q-1\}$.
+
+
+ A \emph{fuzzy network} with \emph{base} $q\geq 2$ consists of a pair $(\mathbf{y,f})$, $\mathbf{y}=\{y(i) \subseteq I :i\in I\}$, $\mathbf{f}=\{f_i:i\in I\}$, with $f_i\colon \{0,1,\dots,q-1\}^k\rightarrow \{0,1,\dots,q-1\}$, such that
+ \begin{align} 
+f_i(x_{i_1},\dots,x_{i_k})=& \big(x_{i_1}\wedge f_i(x_{i_1},\dots,x_{i_k})\big) \label{eq:1}\\
+&\vee \big(\lnot x_{i_1} \wedge f_i(\lnot x_{i_1},x_{i_2},\dots,x_{i_k})\big),\nonumber
+  \end{align}
+  where $x\wedge x':=\min\{x,x'\}, x\vee x':=\max\{x,x'\}$, and $\lnot x:=q-1-x$.  
+Every fuzzy network with base $q=2$ is precisely a Boolean network.  
  Fuzzy networks have been recently used to study some aspects related to the differentiation of cells from the immune system [], and also to explain the importance of certain gene products associated with the development of metabolic syndrome and type 2 diabetes [].  
 
 
- A \emph{fuzzy network} is a Boolean network $(y,f)$ with $f_i\colon \{0,1,\dots,q-1\}^k\rightarrow \{0,1,\dots,q-1\}$, $q\geq 2$, $i\in I$, such that
-% \begin{align*}
-%&f_i(x_{i_1},\dots,x_{i_k})=\\
-% & \big(x_{i_1}\wedge f_i(x_{i_1},\dots,x_{i_k})\big) \vee \big(\lnot x_{i_1} \wedge f_i(\lnot x_{i_1},x_{i_2},\dots,x_{i_k})\big),
-%  \end{align*}
- \begin{align*}
-f_i(x_{i_1},\dots,x_{i_k})=& \big(x_{i_1}\wedge f_i(x_{i_1},\dots,x_{i_k})\big) \\
-&\vee \big(\lnot x_{i_1} \wedge f_i(\lnot x_{i_1},x_{i_2},\dots,x_{i_k})\big),
-  \end{align*}
-  where $x\vee y:=\max\{x,y\}, x\wedge y:=\min\{x,y\}$, and $\lnot x:=q-1-x$.
-  The number $q$ is called the \emph{base} of the network. 
-Notice that in this model, the base  is the same for all genes.
-Every fuzzy network with base $q$ is a directed pseudoforest on $\{0,1,\dots,q-1\}^n$. 
+A \emph{random fuzzy network} is a fuzzy network $(\mathbf{y,f})$, where   $y(i)$ and $f_i$ are chosen randomly and  independently of each other. 
+Random fuzzy networks are also known as random multiple-valued networks (see Dubrova et al. []), or as random multistate networks (see Wittmann et al. []). 
+They are a particular class of random networks with multiple states  (see Sol\'e et. al. []). 
 
-A \emph{random fuzzy network} is a fuzzy network $(y,f)$, where   $y(i)\subseteq I$ and $f_i\colon\{0,1,\dots,q-1\}^n\rightarrow\{0,1,\dots,q-1\}$ are chosen randomly and  independently of each other, for all $i\in I$.
-Random fuzzy networks are a particular class of the random networks with multiple states of Sol\'e et. al. []. 
+%The first thing we do is to count how many different fuzzy networks with fixed parameters there are
+%Thus, each $y(i)$ is chosen  independently and uniformly with probability $\binom{n}{k}^{-1}$, and each $f_i$  is chosen independently and uniformly with probability $2^{-2^k}$. 
 
 
- A \emph{walk} in a digraph $G$ is a sequence of vertices  $v_1,v_2,\dots\in V(G)$, so that for all $j\geq 1, (v_j,v_{j+1})\in E(G)$.
-A walk where all nodes are distinct is called a \emph{path}.
-Paths are necessarily finite walks.   
-A finite walk where the first and the last node are the same is called a \emph{cycle}. 
-The number of distinct nodes in a cycle is the called the \emph{length} of the cycle.
 
-%We say that a digraph $G$ is \emph{strongly connected} if there is a path in $G$ between any two distinct nodes in each direction, i.e. for all $u,v\in V(G)$ there is a path from $u$ to $v$ and a path from $u$ to $v$. 
-
-
-The average number and length of state cycles for  random Boolean networks are two well-studied combinatorial parameters. 
- Let $C(n,q)$ be the average number of cycles  
- on a random fuzzy network with $n$ genes and base $q$, where the number $k$ of regulators per gene is fixed to some constant value. By a result of Kruskal [], we know that 
+Two directed graphs $G$ and $H$ are \emph{isomorphic} if there is a function $\psi\colon V(G)\rightarrow V(H)$, such that for all $u,v\in V(G)$, $(u,v)\in E(G)$ if and only if $(\psi(u), \psi(v))\in E(H)$. 
+ Fuzzy networks with base $q$ are directed pseudoforests on $\{0,1,\dots,q-1\}^n$.
+ Two fuzzy networks are said to be \emph{equivalent} if they are isomorphic as directed pseudoforests.  
+Let $D(n,q)$ be the number of non-equivalent random fuzzy networks with $k=n$. 
+By a result of Bach et al. [], for all $q\geq 2$, we have 
 \[
-C(n,q)\to\frac{1}{2}\log q^n + \bigg( \frac{\log 2 + C}{2} \bigg) + o(1),\quad n\to\infty,
+\sqrt{n} \ll \log D(n,q) \ll \frac{n}{\log\log n}, \quad\text{as}\quad n\to \infty,
 \]
- where $C=0.5772\dots$ is Euler's constant.
+ where $A\ll B$ denotes $|A|\leq cB$ for some constant $c$.
+%Therefore, 
   
- Samuelsson et al. [] gave a formula for $C(n, 2)$ which allows them to conclude that $C(n,2)$ grows faster than $n^{a}$, for any $a>0$.
-  Our experimental research suggests that for  $b,q\geq 0$, if $b\leq q$ then
- \begin{equation}
- \label{eq:2}
- C(n,b)\leq C(n,q).
- \end{equation}
-  In particular, $C(n,2)\leq C(n,q)$ for any $q\geq 2$.
-So, equation \eqref{eq:2} would imply 
+
+
+ A \emph{walk} in a directed graph $G$ is a sequence of vertices  $v_1,v_2,\dots\in V(G)$, so that for all $j\geq 1, (v_j,v_{j+1})\in E(G)$.
+A walk where all vertices are distinct is called a \emph{path}.
+Paths are necessarily finite walks.   
+A finite walk where the first and the last vertex are the same is called a \emph{cycle}. 
+The number of distinct vertices in a cycle is the called the \emph{length} of the cycle. 
+The average number and length of cycles of states are two well-studied combinatorial parameters for  random Boolean networks. 
+ Let $C_k(n,q)$ and $L_k(n,q)$ denote respectively  the average number and length of cycles  
+ on a random fuzzy network with $n$ genes and base $q$, where the number $k$ of regulators per gene is fixed to some constant value. 
+ We write $C(n,q)$ and $L(n,q)$ in the extremal case, when $k=n$.
+ 
+ By a result of Kruskal [], for all $q\geq 2$, we have
+\[
+C(n,q)=\frac{1}{2}\log q^n + \bigg( \frac{\log 2 + C}{2} \bigg) + o(1),\quad\text{as}\quad n\to\infty,
+\]
+ where $C=0.5772\dots$ is Euler-Mascheroni constant. 
+In the context of  gene regulation, this  formula  is well-known for the Boolean case $q=2$, but seems to be new for random fuzzy networks with base $q>2$. 
+For all $q\leq 5$, we have
  \[
- \frac{n^{a}}{
-    C(n,q)} \to 0,\qquad\qquad n\to\infty.
-  \]
-In words, the average number of cycles in a random fuzzy network  $C(n,q)$ grows faster than $n^{a}$, for any $a>0$. 
-% Given $b,q\geq 0$, we have
-% \[b^n\leq q^n,\qquad n\geq 1
-% \] if $b\leq q$. 
+ \sqrt{n}\ll C(n,q) \ll n,\qquad\text{as}\qquad n\to\infty.
+ \]
+ 
+By a result of Flajolet et al. [], for all $q\geq 2$, we have $
+L(n,q)=\sqrt{\pi q^n/8}+o(1),
+$
+  as $n\to \infty$.
+  This is again well-known in the literature of random Boolean networks, but new for random fuzzy networks with base $q>2$.
+  
+  \[\]\[\]
+ Families/Brownian bridge asymptotics (see Aldous et al.  []) ...
+ number of all families equals number of \L ukasiewicz bridges.... Formula in book Analytic combinatorics....
+  % Samuelsson et al. [] gave a formula for $C(n, 2)$ which allows them to conclude that $C(n,2)$ grows faster than $n^{a}$, for any $a>0$.
+%  Our experimental research suggests that for  $b,q\geq 0$, if $b\leq q$ then
+% \begin{equation}
+% \label{eq:2}
+% C(n,b)\leq C(n,q).
+% \end{equation}
+%  In particular, $C(n,2)\leq C(n,q)$ for any $q\geq 2$.
+%So, equation \eqref{eq:2} would imply 
+% \[
+% \frac{n^{a}}{
+%    C(n,q)} \to 0,\qquad\qquad n\to\infty.
+%  \]
+%In words, the average number of cycles in a random fuzzy network  $C(n,q)$ grows faster than $n^{a}$, for any $a>0$. 
+%% Given $b,q\geq 0$, we have
+%% \[b^n\leq q^n,\qquad n\geq 1
+%% \] if $b\leq q$. 
 
 
 % 
